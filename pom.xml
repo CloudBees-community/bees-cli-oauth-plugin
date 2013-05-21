@@ -25,4 +25,18 @@
         <version>1.5.0</version>
       </dependency>
     </dependencies>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/CloudBees-community/bees-cli-${project.artifactId}.git</connection>
+    <developerConnection>scm:git:git@github.com:CloudBees-community/bees-cli-${project.artifactId}.git</developerConnection>
+    <url>http://github.com/CloudBees-community/bees-cli-${project.artifactId}</url>
+  </scm>
 </project>
