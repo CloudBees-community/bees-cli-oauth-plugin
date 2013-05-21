@@ -12,7 +12,7 @@ import java.net.URL;
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="List all the reigstered OAuth applications")
-@CLICommand("oauth:list")
+@CLICommand("oauth:app:list")
 public class ListCommand extends AbstractOAuthCommand {
     @Override
     public int main() throws Exception {

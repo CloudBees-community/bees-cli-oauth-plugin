@@ -18,7 +18,7 @@ import java.util.List;
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="Delete a registered application")
-@CLICommand("oauth:delete")
+@CLICommand("oauth:app:delete")
 public class DeleteCommand extends AbstractOAuthCommand {
     @Argument(index=0,metaVar="ClientID",usage="OAuth Client IDs")
     List<String> clientIds = new ArrayList<String>();

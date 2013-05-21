@@ -13,7 +13,7 @@ import java.net.URL;
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="Dump the OAuth client application information")
-@CLICommand("oauth:show")
+@CLICommand("oauth:app:show")
 public class ShowCommand extends AbstractOAuthCommand {
     @Argument(index=0,metaVar="ClientID",usage="OAuth Client ID to dump",required=true)
     String clientId;

@@ -14,7 +14,7 @@ import java.net.URL;
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="Register new OAuth application")
-@CLICommand("oauth:register")
+@CLICommand("oauth:app:register")
 public class RegisterCommand extends AbstractOAuthCommand {
     @Option(name="-n",usage="Application Name. This name will be displayed on the authorization screen.")
     public String name;
