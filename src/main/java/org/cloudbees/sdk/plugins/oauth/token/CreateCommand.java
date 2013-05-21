@@ -26,7 +26,7 @@ public class CreateCommand extends AbstractTokenCommand {
     @Option(name="-note-url",usage="URL that supplements the note.")
     String noteUrl;
 
-    @Option(name="-scope",usage="Scope")
+    @Option(name="-scope",usage="OAuth scopes that the generated token will have access. Can be specified multiple times.")
     List<String> scopes = new ArrayList<String>();
 
     @Option(name="--account",usage="Account in which the app gets registered.")
