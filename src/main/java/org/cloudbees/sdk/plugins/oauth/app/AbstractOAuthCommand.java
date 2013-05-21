@@ -24,7 +24,7 @@ import java.net.URL;
  */
 public abstract class AbstractOAuthCommand extends AbstractCommand {
     @Inject
-    BeesClientFactory factory;
+    protected BeesClientFactory factory;
 
     protected String getDefaultAccount() {
         return factory.getConfigProperties().getProperty("bees.project.app.domain");
@@ -78,7 +78,7 @@ public abstract class AbstractOAuthCommand extends AbstractCommand {
         }
     }
 
-    static ObjectMapper om = new ObjectMapper();
+    protected static ObjectMapper om = new ObjectMapper();
 
     static {
         om.configure(Feature.AUTO_DETECT_FIELDS, false);
