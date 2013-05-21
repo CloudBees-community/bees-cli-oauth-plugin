@@ -1,4 +1,4 @@
-package org.cloudbees.sdk.plugins.oauth;
+package org.cloudbees.sdk.plugins.oauth.app;
 
 import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;

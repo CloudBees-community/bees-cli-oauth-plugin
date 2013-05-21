@@ -1,4 +1,4 @@
-package org.cloudbees.sdk.plugins.oauth;
+package org.cloudbees.sdk.plugins.oauth.app;
 
 import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;
@@ -20,7 +20,7 @@ public class ShowCommand extends AbstractOAuthCommand {
 
     @Override
     public int main() throws Exception {
-        HttpURLConnection con = makeGetRequest(new URL("https://grandcentral.cloudbees.com/api/v2/applications/"+clientId));
+        HttpURLConnection con = makeGetRequest(new URL("https://grandcentral.cloudbees.com/api/v2/applications/" + clientId));
         return dumpResponse(con);
     }
 }
