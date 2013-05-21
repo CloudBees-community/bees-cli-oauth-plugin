@@ -1,6 +1,9 @@
 package org.cloudbees.sdk.plugins.oauth.app;
 
+import com.cloudbees.api.BeesClient;
 import com.cloudbees.api.BeesClientConfiguration;
+import com.cloudbees.api.CBAccount;
+import com.cloudbees.api.CBUser;
 import com.cloudbees.sdk.cli.AbstractCommand;
 import com.cloudbees.sdk.cli.BeesClientFactory;
 import com.ning.http.util.Base64;
@@ -18,6 +21,9 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -87,15 +93,39 @@ public abstract class AbstractOAuthCommand extends AbstractCommand {
         om.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
     }
 
-    protected String promptAccount(String valueSpecifiedByOption, String prompt) {
+    protected String promptAccount(String valueSpecifiedByOption, String prompt) throws IOException {
         if (valueSpecifiedByOption!=null)   return valueSpecifiedByOption; // this takes the most precedence
 
+        BeesClient bees = factory.get(BeesClient.class);
+        CBUser self = bees.getSelfUser();
+        if (self.accounts.size()==1)
+            return self.accounts.get(0).name;   // only one valid account
+
+        Set<String> names = new TreeSet<String>();
+        for (CBAccount a : self.accounts) {
+            names.add(a.name);
+        }
+
         String defaultValue = getDefaultAccount();
-        System.out.println(prompt +" Default = "+defaultValue);
-                System.out.print(": ");
-        String v = System.console().readLine();
-        if (v.isEmpty())    return defaultValue;
-        else                return v;
+        if (!names.contains(defaultValue))
+            defaultValue = null;
+
+        if (defaultValue!=null)
+            prompt += " Default = "+defaultValue;
+
+        while (true) {
+            System.out.println(prompt);
+            System.out.print(": ");
+            String v = System.console().readLine();
+
+            if (v.isEmpty()) {
+                if (defaultValue!=null)
+                    return defaultValue;
+            } else {
+                if (names.contains(v))
+                    return v;
+            }
+        }
     }
 }
 

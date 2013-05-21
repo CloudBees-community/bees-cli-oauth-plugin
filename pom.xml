@@ -22,7 +22,7 @@
       <dependency>
         <groupId>com.cloudbees</groupId>
         <artifactId>cloudbees-api-client</artifactId>
-        <version>1.5.0</version>
+        <version>1.5.3-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.cloudbees.oauth</groupId>
