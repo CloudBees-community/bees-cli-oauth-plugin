@@ -1,14 +1,14 @@
 package org.cloudbees.sdk.plugins.oauth.token;
 
-import com.cloudbees.api.BeesClientConfiguration;
-import com.cloudbees.oauth.OauthClient;
-import com.cloudbees.oauth.OauthClientImpl;
-import com.cloudbees.oauth.OauthToken;
-import com.cloudbees.oauth.TokenRequest;
+import com.cloudbees.api.BeesClient;
+import com.cloudbees.api.oauth.OauthClient;
+import com.cloudbees.api.oauth.OauthToken;
+import com.cloudbees.api.oauth.TokenRequest;
 import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;
 import org.kohsuke.args4j.Option;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +38,7 @@ public class CreateCommand extends AbstractTokenCommand {
         TokenRequest req = new TokenRequest(note,noteUrl,null,account,scopes.toArray(new String[scopes.size()]));
 
         OauthClient oac = createClient();
-        BeesClientConfiguration config = factory.createConfigurations();
-        OauthToken token = oac.createToken(config.getApiKey(), config.getSecret(), req);
+        OauthToken token = oac.createToken(req);
         if (token==null) {
             System.err.println("Failed to create a token");
             return 1;
@@ -50,7 +49,7 @@ public class CreateCommand extends AbstractTokenCommand {
         return 0;
     }
 
-    private OauthClientImpl createClient() {
-        return new OauthClientImpl();
+    private OauthClient createClient() throws IOException {
+        return factory.get(BeesClient.class).getOauthClient();
     }
 }
