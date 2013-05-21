@@ -30,22 +30,11 @@ public class RegisterCommand extends AbstractOAuthCommand {
 
     @Override
     public int main() throws Exception {
-        String defaultAccount = getDefaultAccount();
-
-
         Application reg = new Application();
         reg.name = prompt(String.class,"name");
         reg.callback_uri = prompt(String.class,"callback_uri");
         reg.app_url = prompt(String.class,"app_url");
-
-        reg.account = account;
-        if (reg.account==null) {
-            System.out.println("Account in which the app gets registered. Default="+defaultAccount);
-            System.out.print(": ");
-            reg.account = System.console().readLine();
-            if (reg.account.isEmpty())
-                reg.account = defaultAccount;
-        }
+        reg.account = promptAccount(account, "Account in which the app gets registered.");
 
         HttpURLConnection con = makePostRequest(new URL("https://grandcentral.cloudbees.com/api/v2/applications/"));
         con.connect();
@@ -54,4 +43,5 @@ public class RegisterCommand extends AbstractOAuthCommand {
 
         return dumpResponse(con);
     }
+
 }

@@ -86,5 +86,16 @@ public abstract class AbstractOAuthCommand extends AbstractCommand {
         om.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         om.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
     }
+
+    protected String promptAccount(String valueSpecifiedByOption, String prompt) {
+        if (valueSpecifiedByOption!=null)   return valueSpecifiedByOption; // this takes the most precedence
+
+        String defaultValue = getDefaultAccount();
+        System.out.println(prompt +" Default = "+defaultValue);
+                System.out.print(": ");
+        String v = System.console().readLine();
+        if (v.isEmpty())    return defaultValue;
+        else                return v;
+    }
 }
 

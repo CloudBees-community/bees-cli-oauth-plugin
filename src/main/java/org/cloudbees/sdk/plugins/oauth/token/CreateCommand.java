@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Generates a new token.
- * 
+ *
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="Create a new token")
@@ -29,9 +29,13 @@ public class CreateCommand extends AbstractTokenCommand {
     @Option(name="-scope",usage="Scope")
     List<String> scopes = new ArrayList<String>();
 
+    @Option(name="--account",usage="Account in which the app gets registered.")
+    public String account;
+
     @Override
     public int main() throws Exception {
-        TokenRequest req = new TokenRequest(note,noteUrl,null,scopes.toArray(new String[scopes.size()]));
+        String account = promptAccount(this.account, "Account that the generated token will grant access to.");
+        TokenRequest req = new TokenRequest(note,noteUrl,null,account,scopes.toArray(new String[scopes.size()]));
 
         OauthClient oac = createClient();
         BeesClientConfiguration config = factory.createConfigurations();
