@@ -9,11 +9,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ * Register new OAuth application
+ *
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="Register new OAuth application")
-@CLICommand("oauth:create")
-public class RegisterReourceProviderCommand extends AbstractOAuthCommand {
+@CLICommand("oauth:register")
+public class RegisterCommand extends AbstractOAuthCommand {
     @Option(name="-n",usage="Application Name. This name will be displayed on the authorization screen.")
     public String name;
 

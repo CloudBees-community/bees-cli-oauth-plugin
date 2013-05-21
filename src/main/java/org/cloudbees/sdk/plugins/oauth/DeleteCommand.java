@@ -4,18 +4,17 @@ import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;
 import org.cloudbees.sdk.plugins.oauth.model.Application;
 import org.cloudbees.sdk.plugins.oauth.model.ApplicationList;
-import org.codehaus.jackson.JsonNode;
 import org.kohsuke.args4j.Argument;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
+ * Delete a registered application
+ *
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="Delete a registered application")
@@ -41,7 +40,7 @@ public class DeleteCommand extends AbstractOAuthCommand {
                 ids.add(app.client_id);
                 System.out.printf("%d : %s (%s)\n", ids.size(), app.name, app.app_url);
             }
-            System.out.printf("Which one to delete? (1-%d): ",ids.size());
+            System.out.printf("Which one to delete? (1-%d): ", ids.size());
             int i = Integer.parseInt(System.console().readLine());
             return delete(ids.get(i-1));
         }

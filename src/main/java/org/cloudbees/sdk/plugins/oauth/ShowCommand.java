@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ * Dump the OAuth client application information
+ *
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="Dump the OAuth client application information")

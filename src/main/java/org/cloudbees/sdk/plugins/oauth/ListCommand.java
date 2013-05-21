@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ * List all the reigstered OAuth applications
+ *
  * @author Kohsuke Kawaguchi
  */
 @BeesCommand(group="OAuth",description="List all the reigstered OAuth applications")
