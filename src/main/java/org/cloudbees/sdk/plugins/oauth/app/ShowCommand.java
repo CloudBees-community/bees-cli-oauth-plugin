@@ -4,9 +4,6 @@ import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;
 import org.kohsuke.args4j.Argument;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 /**
  * Dump the OAuth client application information
  *
@@ -20,7 +17,7 @@ public class ShowCommand extends AbstractOAuthCommand {
 
     @Override
     public int main() throws Exception {
-        HttpURLConnection con = makeGetRequest(new URL("https://grandcentral.cloudbees.com/api/v2/applications/" + clientId));
-        return dumpResponse(con);
+        prettyPrint(createClient().getApplication(clientId));
+        return 0;
     }
 }

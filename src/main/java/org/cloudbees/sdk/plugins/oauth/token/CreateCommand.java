@@ -44,7 +44,7 @@ public class CreateCommand extends AbstractTokenCommand {
             return 1;
         }
 
-        om.writeValue(System.out,token);
+        prettyPrint(token);
 
         return 0;
     }

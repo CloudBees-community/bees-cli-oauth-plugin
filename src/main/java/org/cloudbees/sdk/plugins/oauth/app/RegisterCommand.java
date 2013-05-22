@@ -1,12 +1,9 @@
 package org.cloudbees.sdk.plugins.oauth.app;
 
+import com.cloudbees.api.oauth.OauthClientApplication;
 import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;
-import org.cloudbees.sdk.plugins.oauth.model.Application;
 import org.kohsuke.args4j.Option;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * Register new OAuth application
@@ -30,18 +27,16 @@ public class RegisterCommand extends AbstractOAuthCommand {
 
     @Override
     public int main() throws Exception {
-        Application reg = new Application();
+        OauthClientApplication reg = new OauthClientApplication();
         reg.name = prompt(String.class,"name");
         reg.callback_uri = prompt(String.class,"callback_uri");
         reg.app_url = prompt(String.class,"app_url");
         reg.account = promptAccount(account, "Account in which the app gets registered.");
 
-        HttpURLConnection con = makePostRequest(new URL("https://grandcentral.cloudbees.com/api/v2/applications/"));
-        con.connect();
-        om.writeValue(con.getOutputStream(), reg);
-        con.getOutputStream().close();
+        OauthClientApplication r = createClient().registerApplication(reg);
+        prettyPrint(r);
 
-        return dumpResponse(con);
+        return 0;
     }
 
 }

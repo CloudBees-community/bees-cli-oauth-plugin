@@ -1,14 +1,11 @@
 package org.cloudbees.sdk.plugins.oauth.app;
 
+import com.cloudbees.api.oauth.OauthClient;
+import com.cloudbees.api.oauth.OauthClientApplication;
 import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;
-import org.cloudbees.sdk.plugins.oauth.model.Application;
-import org.cloudbees.sdk.plugins.oauth.model.ApplicationList;
 import org.kohsuke.args4j.Argument;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,29 +22,22 @@ public class DeleteCommand extends AbstractOAuthCommand {
 
     @Override
     public int main() throws Exception {
+        OauthClient oac = createClient();
+
         if (clientIds.size()>0) {
             for (String clientId : clientIds) {
-                int r = delete(clientId);
-                if (r!=0)
-                    return r;   // failure. abort
+                oac.deleteApplication(clientId);
             }
-            return 0;   // all success
         } else {
-            HttpURLConnection con = makeGetRequest(new URL("https://grandcentral.cloudbees.com/api/v2/applications/"));
-            ApplicationList all = om.readValue(con.getInputStream(), ApplicationList.class);
             List<String> ids = new ArrayList<String>();
-            for (Application app : all.applications) {
+            for (OauthClientApplication app : oac.listApplication()) {
                 ids.add(app.client_id);
                 System.out.printf("%d : %s (%s)\n", ids.size(), app.name, app.app_url);
             }
             System.out.printf("Which one to delete? (1-%d): ", ids.size());
             int i = Integer.parseInt(System.console().readLine());
-            return delete(ids.get(i-1));
+            oac.deleteApplication(ids.get(i-1));
         }
-    }
-
-    private int delete(String clientId) throws IOException {
-        HttpURLConnection con = makeDeleteRequest(new URL("https://grandcentral.cloudbees.com/api/v2/applications/" + clientId));
-        return dumpResponse(con);
+        return 0;
     }
 }
