@@ -48,8 +48,4 @@ public class CreateCommand extends AbstractTokenCommand {
 
         return 0;
     }
-
-    private OauthClient createClient() throws IOException {
-        return factory.get(BeesClient.class).getOauthClient();
-    }
 }
