@@ -1,9 +1,12 @@
 package org.cloudbees.sdk.plugins.oauth.app;
 
+import com.cloudbees.api.oauth.GrantType;
 import com.cloudbees.api.oauth.OauthClientApplication;
 import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;
 import org.kohsuke.args4j.Option;
+
+import java.util.List;
 
 /**
  * Register new OAuth application
@@ -25,6 +28,9 @@ public class RegisterCommand extends AbstractOAuthCommand {
     @Option(name="--account",usage="Account in which the app gets registered.")
     public String account;
 
+    @Option(name="--grant-type",metaVar="[authorization_code|client_credentials]", usage="Token issuance mode allowed for this application. Multiple options are allowed.")
+    public List<String> grantTypes;
+
     @Override
     public int main() throws Exception {
         OauthClientApplication reg = new OauthClientApplication();
@@ -32,6 +38,16 @@ public class RegisterCommand extends AbstractOAuthCommand {
         reg.callback_uri = prompt(String.class,"callback_uri");
         reg.app_url = prompt(String.class,"app_url");
         reg.account = promptAccount(account, "Account in which the app gets registered.");
+
+        if (grantTypes.isEmpty()) {
+            reg.grant_types.add(GrantType.AUTHORIZATION_CODE);
+        } else {
+            for (String gt : grantTypes) {
+                GrantType gtv = GrantType.parse(gt);
+                if (gtv==null)  throw new IllegalArgumentException("Invalid grant type: "+gt);
+                reg.grant_types.add(gtv);
+            }
+        }
 
         OauthClientApplication r = createClient().registerApplication(reg);
         prettyPrint(r);
