@@ -8,7 +8,7 @@ import com.cloudbees.sdk.cli.CLICommand;
 /**
  * @author Kohsuke Kawaguchi
  */
-@BeesCommand(group="OAuth",description="List all the registered OAuth applications")
+@BeesCommand(group="OAuth",description="List all the registered OAuth authorizations")
 @CLICommand("oauth:token:list")
 public class ListCommand extends AbstractTokenCommand {
     @Override
