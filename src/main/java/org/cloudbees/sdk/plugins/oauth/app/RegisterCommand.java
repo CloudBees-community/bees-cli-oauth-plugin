@@ -6,6 +6,7 @@ import com.cloudbees.sdk.cli.BeesCommand;
 import com.cloudbees.sdk.cli.CLICommand;
 import org.kohsuke.args4j.Option;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class RegisterCommand extends AbstractOAuthCommand {
 
     @Option(name="--grant-type",metaVar="[authorization_code|client_credentials|all]",
             usage="Token issuance mode allowed for this application. Multiple options are allowed. If you are unsure, request all grant types by passing 'all'")
-    public List<String> grantTypes;
+    public List<String> grantTypes = new ArrayList<String>();
 
     @Override
     public int main() throws Exception {
