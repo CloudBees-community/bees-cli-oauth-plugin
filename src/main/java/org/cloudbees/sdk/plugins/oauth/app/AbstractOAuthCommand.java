@@ -52,6 +52,7 @@ public abstract class AbstractOAuthCommand extends AbstractCommand {
         om.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
     }
 
+    // TODO: push this down to some common code as it's useful elsewhere
     protected String promptAccount(String valueSpecifiedByOption, String prompt) throws IOException {
         if (valueSpecifiedByOption!=null)   return valueSpecifiedByOption; // this takes the most precedence
 
