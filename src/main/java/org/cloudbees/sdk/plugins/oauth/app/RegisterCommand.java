@@ -39,7 +39,7 @@ public class RegisterCommand extends AbstractOAuthCommand {
     public List<String> grantTypes = new ArrayList<String>();
 
 
-    @Option(name="-S",usage="Register OAuth scope parameters. -S name=https://acme.com/scope1 -S display_name=\"My secured OAuth app\"", handler = MapOptionHandler.class, metaVar = "name=SCOPE_URL\n   display_name=USER_VISIBLE_NAME")
+    @Option(name="-S",usage="Register OAuth scope parameters. -S https://acme.com/scope1=\"My app\"", handler = MapOptionHandler.class, metaVar = "SCOPE_URL=USER_VISIBLE_NAME")
     Map<String,String> scopeParams = new HashMap<String,String>();
 
 
@@ -65,13 +65,10 @@ public class RegisterCommand extends AbstractOAuthCommand {
             }
         }
 
-        if(scopeParams.size() > 0){
-            if(scopeParams.get("name") == null || scopeParams.get("display_name") == null ){
-                throw new RuntimeException("Both name and display_name must be present with -S option");
-            }
+        for(String param: scopeParams.keySet()){
             ScopeDefinition scopeDefinition = new ScopeDefinition();
-            scopeDefinition.name = scopeParams.get("name");
-            scopeDefinition.display_name = scopeParams.get("display_name");
+            scopeDefinition.name = param;
+            scopeDefinition.display_name = scopeParams.get(param);
             reg.scopes.add(scopeDefinition);
         }
 
