@@ -1,0 +1,20 @@
+# IntelliJ project files 
+*.iml
+*.ipr
+*.iws
+.idea
+
+# eclipse project file
+.settings
+.classpath
+.project
+
+.DS_Store
+
+#Ignore all dot files
+.*
+
+#except .gitignore
+!.gitignore
+**/target/*
+*~
