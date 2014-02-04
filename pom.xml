@@ -9,7 +9,7 @@
 
     <groupId>org.cloudbees.sdk.plugins</groupId>
     <artifactId>oauth-plugin</artifactId>
-    <version>1.1</version>
+    <version>1.2-SNAPSHOT</version>
     <name>Commands for OAuth service</name>
 
     <dependencies>
